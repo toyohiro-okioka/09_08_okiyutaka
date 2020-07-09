@@ -21,7 +21,15 @@ check_session_id(); // idチェック関数の実行
   <fieldset>
     <legend>メニュー画面</legend>
     <a href="todo_read.php">todo一覧画面</a>
-    <a href="user_read.php">ユーザー一覧画面</a>
+
+    <?php
+    if ($_SESSION['is_admin'] == 1) {
+    ?>
+      <a href="user_read.php">ユーザー一覧画面</a>
+    <?php
+    } 
+    ?>
+
     <a href="logout.php">ログアウト</a>
   </fieldset>
 </body>

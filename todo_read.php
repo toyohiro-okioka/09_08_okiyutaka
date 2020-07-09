@@ -4,14 +4,21 @@ session_start(); // セッションの開始
 include('functions.php'); // 関数ファイル読み込み
 check_session_id(); // idチェック関数の実行
 
+$username = $_SESSION['username'];
+
 // DB接続
 $pdo = connect_to_db();
 
-// データ取得SQL作成
-$sql = 'SELECT * FROM todo_table';
+if ($_SESSION['is_admin'] == 1) {
+  // データ取得SQL作成
+  $sql = 'SELECT * FROM todo_table';
+} else {
+  $sql = 'SELECT * FROM todo_table WHERE username=:username';
+}
 
 // SQL準備&実行
 $stmt = $pdo->prepare($sql);
+$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 $status = $stmt->execute();
 
 // データ登録処理後

@@ -37,6 +37,7 @@ if (!$val) {
   $_SESSION["session_id"] = session_id();
   $_SESSION["is_admin"] = $val["is_admin"];
   $_SESSION["username"] = $val["username"];
+  $_SESSION["is_admin"] = $val["is_admin"];
   header("Location:menu.php"); // 一覧ページへ移動
   exit();
 }

@@ -37,7 +37,7 @@ if ($stmt->fetchColumn() > 0) {
 
 // ユーザ登録SQL作成
 // `created_at`と`updated_at`には実行時の`sysdate()`関数を用いて実行時の日時を入力する
-$sql = 'INSERT INTO users_table(id, username, password, is_admin, is_deleted, created_at, updated_at) VALUES(NULL, :username, :password, 0, 0, sysdate(), sysdate())';
+$sql = 'INSERT INTO users_table(id, username, password, is_admin, is_deleted, created_at, updated_at) VALUES(NULL, :username, :password, NULL, NULL, sysdate(), sysdate())';
 
 // SQL準備&実行
 $stmt = $pdo->prepare($sql);

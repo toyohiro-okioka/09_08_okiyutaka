@@ -1,12 +1,10 @@
 <?php
 
-// 送信データのチェック
-// var_dump($_POST);
-// exit();
-
 session_start();
 include("functions.php");
 check_session_id(); // idチェック関数の実行
+
+$username = $_SESSION['username'];
 
 // 送信データ受け取り
 $id = $_POST['id'];
@@ -19,11 +17,12 @@ $pdo = connect_to_db();
 // UPDATE文を作成&実行
 $sql = "";
 $sql = "UPDATE todo_table SET todo=:todo, deadline=:deadline,
-updated_at=sysdate() WHERE id=:id";
+updated_at=sysdate(), username=:username WHERE id=:id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':todo', $todo, PDO::PARAM_STR);
 $stmt->bindValue(':deadline', $deadline, PDO::PARAM_STR);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 $status = $stmt->execute();
 
 // データ登録処理後

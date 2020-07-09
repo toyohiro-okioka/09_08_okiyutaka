@@ -1,8 +1,5 @@
 <?php
 
-// var_dump($_GET);
-// exit();
-
 session_start(); // セッションの開始
 include("functions.php");
 check_session_id(); // idチェック関数の実行

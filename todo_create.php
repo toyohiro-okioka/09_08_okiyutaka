@@ -1,11 +1,10 @@
 <?php
 
-// var_dump($_POST);
-// exit();
-
 session_start();
 include("functions.php");
 check_session_id(); // idチェック関数の実行
+
+$username = $_SESSION['username'];
 
 // 項目入力のチェック
 // 値が存在しないor空で送信されてきた場合はNGにする
@@ -22,33 +21,17 @@ if (
 $todo = $_POST['todo'];
 $deadline = $_POST['deadline'];
 
-// // DB接続の設定
-// // DB名は`gsacf_x00_00`にする
-// $dbn = 'mysql:dbname=gsacf_d06_08;charset=utf8;port=3306;host=localhost';
-// $user = 'root';
-// $pwd = '';
-
-// try {
-//   // ここでDB接続処理を実行する
-//   $pdo = new PDO($dbn, $user, $pwd);
-// } catch (PDOException $e) {
-//   // DB接続に失敗した場合はここでエラーを出力し，以降の処理を中止する
-//   echo json_encode(["db error" => "{$e->getMessage()}"]);
-//   exit();
-// }
-
-include('functions.php');
-
 $pdo = connect_to_db();
 
 // データ登録SQL作成
 // `created_at`と`updated_at`には実行時の`sysdate()`関数を用いて実行時の日時を入力する
-$sql = 'INSERT INTO todo_table(id, todo, deadline, created_at, updated_at) VALUES(NULL, :todo, :deadline, sysdate(), sysdate())';
+$sql = 'INSERT INTO todo_table(id, todo, deadline, created_at, updated_at, username) VALUES(NULL, :todo, :deadline, sysdate(), sysdate(), :username)';
 
 // SQL準備&実行
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':todo', $todo, PDO::PARAM_STR);
 $stmt->bindValue(':deadline', $deadline, PDO::PARAM_STR);
+$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 $status = $stmt->execute();
 
 // データ登録処理後

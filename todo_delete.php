@@ -1,9 +1,5 @@
 <?php
 
-// 送信データのチェック
-// var_dump($_GET);
-// exit();
-
 session_start();
 include("functions.php");
 check_session_id(); // idチェック関数の実行
